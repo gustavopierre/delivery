@@ -2,19 +2,11 @@
 
 from delivery.ext.db import db 
 
-class User(db.Model):
-    __tablename__ = "user"
-    id = db.Column("id", db.Integer, primary_key=True)
-    email = db.Column("email", db.Unicode, unique=True)
-    passwd = db.Column("passwd", db.Unicode)
-    admin = db.Column("admin", db.Boolean)
-
-
 class Category(db.Model):
     __tablename__ = "category"
     id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column("name", db.Unicode, unique=True)
-
+    on_menu = db.Column("on_menu", db.Boolean)
 
 class Items(db.Model):
     __tablename__ = "items"
@@ -70,6 +62,7 @@ class Store(db.Model):
         "category_id", db.Integer, db.ForeignKey("category.id")
     )
     user_id = db.Column("user_id", db.Integer, db.ForeignKey("user.id"))
+    active = db.Column("active", db.Boolean)
 
     category = db.relationship("Category", foreign_keys=category_id)
     user = db.relationship("User", foreign_keys=user_id)
